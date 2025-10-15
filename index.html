@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>iPecs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E7E7E7;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* Désactiver les effets bounce sur iPhone */
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            /* Désactiver le pull-to-refresh sur iPhone */
+            overscroll-behavior: none;
+            -webkit-overscroll-behavior: none;
+        }
+        
+        /* Désactiver le zoom sur iPhone */
+        input, textarea, select {
+            font-size: 16px !important;
+        }
+        
+        /* Container principal */
+        .main-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            /* Renforcer la désactivation du pull-to-refresh */
+            overscroll-behavior-y: none;
+            -webkit-overscroll-behavior-y: none;
+        }
+        
+        /* Menu principal - MENU-1 */
+        .menu-1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(#FFB84D, #B26B00);
+            z-index: 1000;
+            display: flex;
+        }
+        
+        .menu-1-left, .menu-1-right {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Boutons fonction principale */
+        .btn-fct {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .btn-fct1 {
+            background-color: #4CAF50;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+        }
+        
+        .btn-fct1.active {
+            background-color: #66BB6A;
+            box-shadow: 0 0 25px rgba(102, 187, 106, 1);
+        }
+        
+        .btn-fct2 {
+            background-color: #2E7D32;
+            box-shadow: none;
+        }
+        
+        .btn-fct2.active {
+            background-color: #66BB6A;
+            box-shadow: 0 0 25px rgba(102, 187, 106, 1);
+        }
+        
+        /* Menu secondaire - MENU-2 */
+        .menu-2 {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(#B2B2B2, #4D4D4D);
+            z-index: 999;
+            display: flex;
+        }
+        
+        .menu-2-third {
+            width: 33.333%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .menu-btn:hover {
+            opacity: 1;
+        }
+        
+        .menu-btn img {
+            width: 50px;
+            height: auto;
+        }
+        
+        /* Zone principale */
+        .main-area {
+            position: absolute;
+            top: 120px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 120px);
+            background-color: #E7E7E7;
+        }
+        
+        /* Ajustement spécifique pour iPhone Safari */
+        @media screen and (max-width: 480px) {
+            .main-area {
+                /* Sur iPhone, on soustrait l'espace pour la barre de navigation Safari */
+                height: calc(100vh - 120px - env(safe-area-inset-bottom, 44px));
+            }
+            
+            /* Détection spécifique de Safari sur iOS */
+            @supports (-webkit-touch-callout: none) {
+                .main-area {
+                    height: calc(100vh - 120px - 44px);
+                }
+            }
+        }
+        
+        /* Pour les iPhone avec encoche (iPhone X et plus récents) */
+        @media screen and (max-width: 480px) and (orientation: portrait) {
+            .main-area {
+                height: calc(100vh - 120px - env(safe-area-inset-bottom, 34px) - 44px);
+            }
+        }
+        
+        /* DIV-1, DIV-2, DIV-3 */
+        .div-1, .div-2, .div-3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #E7E7E7;
+            overflow: hidden;
+            display: none;
+        }
+        
+        /* Scrolling activé uniquement pour DIV-2 */
+        .div-2 {
+            overflow-y: auto;
+            overflow-x: hidden;
+            /* Permettre le scroll sur iOS */
+            -webkit-overflow-scrolling: touch;
+            /* Empêcher le pull-to-refresh même dans DIV-2 */
+            overscroll-behavior-y: contain;
+            -webkit-overscroll-behavior-y: contain;
+            overscroll-behavior-x: none;
+            -webkit-overscroll-behavior-x: none;
+        }
+        
+        .div-1 {
+            display: block;
+            border-bottom: 1px solid red;
+        }
+        
+        .div-1.active, .div-2.active, .div-3.active {
+            display: block;
+        }
+        
+        /* Zones de texte dans DIV-1 */
+        .text-zone {
+            position: absolute;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #ddd;
+        }
+        
+        .text-zone.speaking {
+            transform: scale(1.1);
+            color: #FFD700;
+        }
+        
+        /* Tailles de police responsive */
+        @media screen and (max-width: 480px) {
+            .text-zone {
+                font-size: 20px;
+            }
+        }
+        
+        @media screen and (min-width: 481px) and (max-width: 768px) {
+            .text-zone {
+                font-size: 36px;
+            }
+        }
+        
+        @media screen and (min-width: 769px) {
+            .text-zone {
+                font-size: 36px;
+            }
+        }
+        
+        /* Modal de saisie de texte */
+        .text-input-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .text-input-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 300px;
+        }
+        
+        .text-input-field {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .text-input-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .modal-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .modal-btn img {
+            width: 50px;
+            height: auto;
+        }
+        
+        /* Arborescence DIV-2 */
+        .file-tree {
+            padding: 20px;
+            min-height: 100%;
+            overflow-y: visible; /* Laisser le scroll être géré par div-2 */
+            /* Forcer le scroll sur iOS si nécessaire */
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .folder {
+            margin-bottom: 20px;
+        }
+        
+        .folder-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 150%;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .subfolder {
+            margin-bottom: 10px;
+        }
+        
+        .subfolder .folder-header {
+            font-size: 130%;
+            margin-bottom: 5px;
+        }
+        
+        .folder-triangle {
+            width: 0;
+            height: 0;
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .folder-triangle.closed {
+            border-left: 8px solid black;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+        
+        .folder-triangle.open {
+            border-top: 8px solid black;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            transform: rotate(0deg);
+        }
+        
+        .folder-content {
+            margin-left: 40px;
+            display: none;
+        }
+        
+        .folder-content.open {
+            display: block;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            cursor: pointer;
+            font-size: 130%;
+            margin-left: 0; /* Alignement avec les sous-dossiers */
+        }
+        
+        .file-list {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .subfolder-list {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .file-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            margin-right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .file-checkbox.selected {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .file-checkbox.selected::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Emplacements d'images DIV-3 */
+        .image-slots {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .image-slot {
+            position: absolute;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .image-slot.visible {
+            display: block;
+        }
+        
+        .image-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        /* Cacher les éléments par défaut */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- MENU-1 -->
+        <div class="menu-1">
+            <div class="menu-1-left">
+                <button class="btn-fct btn-fct1 active" id="btn-fct1"></button>
+            </div>
+            <div class="menu-1-right">
+                <button class="btn-fct btn-fct2" id="btn-fct2"></button>
+            </div>
+        </div>
+        
+        <!-- MENU-2 -->
+        <div class="menu-2" id="menu-2">
+            <div class="menu-2-third" id="menu-2-left"></div>
+            <div class="menu-2-third" id="menu-2-center">
+                <button class="menu-btn" id="btn-poubelle">
+                    <img src="img/icone_poubelle.png" alt="Poubelle">
+                </button>
+            </div>
+            <div class="menu-2-third" id="menu-2-right">
+                <button class="menu-btn" id="btn-plus">
+                    <img src="img/icone_plus.png" alt="Plus">
+                </button>
+            </div>
+        </div>
+        
+        <!-- Zone principale -->
+        <div class="main-area">
+            <!-- DIV-1 : Zones de texte -->
+            <div class="div-1 active" id="div-1">
+                <!-- Les zones de texte seront ajoutées dynamiquement ici -->
+            </div>
+            
+            <!-- DIV-2 : Arborescence des fichiers -->
+            <div class="div-2" id="div-2">
+                <div class="file-tree" id="file-tree">
+                    <!-- L'arborescence sera générée dynamiquement ici -->
+                </div>
+            </div>
+            
+            <!-- DIV-3 : Emplacements d'images -->
+            <div class="div-3" id="div-3">
+                <div class="image-slots">
+                    <div class="image-slot" id="slot-1"></div>
+                    <div class="image-slot" id="slot-2"></div>
+                    <div class="image-slot" id="slot-3"></div>
+                    <div class="image-slot" id="slot-4"></div>
+                    <div class="image-slot" id="slot-5"></div>
+                    <div class="image-slot" id="slot-6"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal de saisie de texte -->
+        <div class="text-input-modal" id="text-input-modal">
+            <div class="text-input-content">
+                <input type="text" class="text-input-field" id="text-input-field" maxlength="30" autocomplete="off">
+                <div class="text-input-buttons">
+                    <button class="modal-btn" id="btn-cancel">
+                        <img src="img/icone_fleche_gauche.png" alt="Annuler">
+                    </button>
+                    <button class="modal-btn" id="btn-ok">
+                        <img src="img/icone_ok.png" alt="OK">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Variables globales
+        let currentFunction = 1; // 1 pour DIV-1, 2 pour DIV-2, 3 pour DIV-3
+        let textZones = [];
+        let selectedFiles = [];
+        let maxSelectedFiles = 6;
+        let pictosData = null;
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPictosData();
+            setupEventListeners();
+            calculateZoneDimensions();
+            setupMenuForFunction1();
+            
+            // Ajustement spécial pour Safari sur iPhone
+            if (isMobileSafari()) {
+                adjustForMobileSafari();
+            }
+        });
+        
+        // Détection de Safari mobile
+        function isMobileSafari() {
+            return /iPhone|iPad|iPod/.test(navigator.userAgent) && /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+        }
+        
+        // Ajustements spéciaux pour Safari mobile
+        function adjustForMobileSafari() {
+            // Forcer le recalcul des dimensions après un court délai
+            // pour s'assurer que le viewport est correctement défini
+            setTimeout(() => {
+                calculateZoneDimensions();
+                if (currentFunction === 3) {
+                    calculateImageSlotDimensions();
+                }
+            }, 100);
+            
+            // Écouter les changements d'orientation
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => {
+                    calculateZoneDimensions();
+                    if (currentFunction === 3) {
+                        calculateImageSlotDimensions();
+                    }
+                }, 200);
+            });
+            
+            // Désactiver complètement le pull-to-refresh
+            disablePullToRefresh();
+        }
+        
+        // Fonction pour désactiver le pull-to-refresh sur iPhone
+        function disablePullToRefresh() {
+            let startY = 0;
+            let isInScrollableArea = false;
+            
+            // Empêcher le scroll vers le haut quand on est déjà en haut de la page
+            document.body.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].pageY;
+                
+                // Vérifier si on commence le touch dans DIV-2
+                const div2 = document.getElementById('div-2');
+                isInScrollableArea = false;
+                if (div2 && div2.classList.contains('active')) {
+                    let target = e.target;
+                    while (target) {
+                        if (target === div2 || target.classList.contains('file-tree')) {
+                            isInScrollableArea = true;
+                            break;
+                        }
+                        target = target.parentNode;
+                    }
+                }
+            }, { passive: false });
+            
+            document.body.addEventListener('touchmove', function(e) {
+                const currentY = e.touches[0].pageY;
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                
+                // Si on est dans DIV-2, gérer le scroll spécialement
+                if (isInScrollableArea) {
+                    const div2 = document.getElementById('div-2');
+                    if (div2 && div2.classList.contains('active')) {
+                        const div2ScrollTop = div2.scrollTop;
+                        
+                        // Si on est en haut de DIV-2 et qu'on tire vers le bas (pull-to-refresh)
+                        if (div2ScrollTop === 0 && currentY > startY) {
+                            e.preventDefault(); // Empêcher le pull-to-refresh
+                            e.stopPropagation();
+                            return false;
+                        }
+                        // Sinon permettre le scroll normal dans DIV-2
+                        return;
+                    }
+                }
+                
+                // Pour les autres zones, empêcher tout scroll
+                // Si on est en haut de la page et qu'on essaie de scroller vers le haut
+                if (scrollTop === 0 && currentY > startY) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+                
+                // Empêcher le scroll vertical sur le body
+                e.preventDefault();
+            }, { passive: false });
+            
+            // Empêcher également les événements wheel (scroll avec la molette) sauf dans DIV-2
+            document.body.addEventListener('wheel', function(e) {
+                // Vérifier si on est dans DIV-2
+                const div2 = document.getElementById('div-2');
+                if (div2 && div2.classList.contains('active')) {
+                    let target = e.target;
+                    while (target) {
+                        if (target === div2 || target.classList.contains('file-tree')) {
+                            return; // Permettre le scroll wheel dans DIV-2
+                        }
+                        target = target.parentNode;
+                    }
+                }
+                e.preventDefault();
+            }, { passive: false });
+        }
+        
+        // Chargement des données pictos.json
+        async function loadPictosData() {
+            try {
+                const response = await fetch('pictos.json');
+                pictosData = await response.json();
+            } catch (error) {
+                console.error('Erreur lors du chargement de pictos.json:', error);
+            }
+        }
+        
+        // Configuration des écouteurs d'événements
+        function setupEventListeners() {
+            // Boutons de fonction principale
+            document.getElementById('btn-fct1').addEventListener('click', () => switchToFunction(1));
+            document.getElementById('btn-fct2').addEventListener('click', () => switchToFunction(2));
+            
+            // Boutons du menu secondaire
+            document.getElementById('btn-plus').addEventListener('click', showTextInput);
+            document.getElementById('btn-poubelle').addEventListener('click', clearAllZones);
+            
+            // Modal de saisie de texte
+            document.getElementById('btn-cancel').addEventListener('click', hideTextInput);
+            document.getElementById('btn-ok').addEventListener('click', addTextZone);
+            document.getElementById('text-input-field').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTextZone();
+                }
+            });
+        }
+        
+        // Calcul des dimensions des zones
+        function calculateZoneDimensions() {
+            const screenWidth = window.innerWidth;
+            let div1Height = document.getElementById('div-1').offsetHeight;
+            
+            // Ajustement spécial pour iPhone Safari
+            if (window.innerWidth <= 480 && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                // Calcul de la hauteur réelle disponible en tenant compte de la barre Safari
+                const viewportHeight = window.innerHeight;
+                const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-bottom)')) || 0;
+                const safariBarHeight = 44; // Hauteur standard de la barre Safari sur iPhone
+                div1Height = viewportHeight - 120 - safeAreaBottom - safariBarHeight;
+            }
+            
+            window.zoneConfig = {
+                width: Math.round((screenWidth / 17) * 7), // L-A
+                height: Math.round((div1Height / 22) * 6), // H-C
+                marginX: Math.round((screenWidth / 17) * 1), // L-B
+                marginY: Math.round((div1Height / 22) * 1),  // H-D
+                containerHeight: div1Height
+            };
+        }
+        
+        // Basculement entre les fonctions
+        function switchToFunction(funcNum) {
+            currentFunction = funcNum;
+            
+            // Mise à jour des boutons
+            document.querySelectorAll('.btn-fct').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-fct${funcNum}`).classList.add('active');
+            
+            // Masquage de toutes les divs
+            document.querySelectorAll('.div-1, .div-2, .div-3').forEach(div => {
+                div.classList.remove('active');
+            });
+            
+            // Affichage de la div correspondante et configuration du menu
+            if (funcNum === 1) {
+                document.getElementById('div-1').classList.add('active');
+                setupMenuForFunction1();
+            } else if (funcNum === 2) {
+                document.getElementById('div-2').classList.add('active');
+                setupMenuForFunction2();
+                generateFileTree();
+            }
+        }
+        
+        // Configuration du menu pour la fonction 1
+        function setupMenuForFunction1() {
+            document.getElementById('menu-2-left').innerHTML = '';
+            document.getElementById('menu-2-center').innerHTML = '<button class="menu-btn" id="btn-poubelle"><img src="img/icone_poubelle.png" alt="Poubelle"></button>';
+            document.getElementById('menu-2-right').innerHTML = '<button class="menu-btn" id="btn-plus"><img src="img/icone_plus.png" alt="Plus"></button>';
+            
+            // Réattacher les événements
+            document.getElementById('btn-plus').addEventListener('click', showTextInput);
+            document.getElementById('btn-poubelle').addEventListener('click', clearAllZones);
+        }
+        
+        // Configuration du menu pour la fonction 2
+        function setupMenuForFunction2() {
+            document.getElementById('menu-2-left').innerHTML = '';
+            document.getElementById('menu-2-center').innerHTML = '<button class="menu-btn" id="btn-poubelle"><img src="img/icone_poubelle.png" alt="Poubelle"></button>';
+            
+            // Le bouton OK n'est affiché que si des fichiers sont sélectionnés
+            updateOkButton();
+            
+            // Réattacher les événements
+            document.getElementById('btn-poubelle').addEventListener('click', clearSelectedFiles);
+            
+            // Ajouter une protection spéciale contre le pull-to-refresh pour DIV-2
+            setupDiv2ScrollProtection();
+        }
+        
+        // Protection spéciale contre le pull-to-refresh dans DIV-2
+        function setupDiv2ScrollProtection() {
+            const div2 = document.getElementById('div-2');
+            if (!div2) return;
+            
+            let startY = 0;
+            
+            div2.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            div2.addEventListener('touchmove', function(e) {
+                const currentY = e.touches[0].clientY;
+                const scrollTop = this.scrollTop;
+                
+                // Si on est en haut de DIV-2 et qu'on tire vers le bas
+                if (scrollTop === 0 && currentY > startY) {
+                    // Forcer un petit scroll pour empêcher le pull-to-refresh
+                    this.scrollTop = 1;
+                }
+            }, { passive: true });
+        }
+        
+        // Mise à jour du bouton OK
+        function updateOkButton() {
+            const rightMenu = document.getElementById('menu-2-right');
+            if (selectedFiles.length > 0) {
+                rightMenu.innerHTML = '<button class="menu-btn" id="btn-ok-files"><img src="img/icone_ok.png" alt="OK"></button>';
+                document.getElementById('btn-ok-files').addEventListener('click', processSelectedFiles);
+            } else {
+                rightMenu.innerHTML = '';
+            }
+        }
+        
+        // Affichage du modal de saisie de texte
+        function showTextInput() {
+            if (textZones.length >= 6) {
+                return; // Maximum 6 zones
+            }
+            document.getElementById('text-input-modal').style.display = 'flex';
+            document.getElementById('text-input-field').value = '';
+            document.getElementById('text-input-field').focus();
+        }
+        
+        // Masquage du modal de saisie de texte
+        function hideTextInput() {
+            document.getElementById('text-input-modal').style.display = 'none';
+        }
+        
+        // Ajout d'une zone de texte
+        function addTextZone() {
+            const input = document.getElementById('text-input-field');
+            const text = input.value.trim();
+            
+            if (text === '' || textZones.length >= 6) {
+                return;
+            }
+            
+            const zone = createTextZone(text.toUpperCase(), textZones.length);
+            textZones.push(zone);
+            
+            hideTextInput();
+        }
+        
+        // Création d'une zone de texte
+        function createTextZone(text, index) {
+            const div = document.createElement('div');
+            div.className = 'text-zone';
+            div.textContent = text;
+            div.addEventListener('click', () => speakText(text, div));
+            
+            // Calcul de la position selon les spécifications
+            const config = window.zoneConfig;
+            const containerHeight = config.containerHeight || (window.innerHeight - 120);
+            
+            const positions = [
+                { x: config.marginX, y: config.marginY }, // haut gauche
+                { x: window.innerWidth - config.marginX - config.width, y: config.marginY }, // haut droite
+                { x: config.marginX, y: config.marginY * 2 + config.height }, // milieu gauche
+                { x: window.innerWidth - config.marginX - config.width, y: config.marginY * 2 + config.height }, // milieu droite
+                { x: config.marginX, y: containerHeight - config.marginY - config.height }, // bas gauche
+                { x: window.innerWidth - config.marginX - config.width, y: containerHeight - config.marginY - config.height } // bas droite
+            ];
+            
+            const pos = positions[index];
+            div.style.left = pos.x + 'px';
+            div.style.top = pos.y + 'px';
+            div.style.width = config.width + 'px';
+            div.style.height = config.height + 'px';
+            
+            document.getElementById('div-1').appendChild(div);
+            
+            return { element: div, text: text };
+        }
+        
+        // Synthèse vocale
+        function speakText(text, element) {
+            if ('speechSynthesis' in window) {
+                // Animation visuelle
+                element.classList.add('speaking');
+                setTimeout(() => {
+                    element.classList.remove('speaking');
+                }, 400);
+                
+                // Synthèse vocale
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'fr-FR';
+                speechSynthesis.speak(utterance);
+            }
+        }
+        
+        // Effacement de toutes les zones
+        function clearAllZones() {
+            textZones.forEach(zone => {
+                if (zone.element && zone.element.parentNode) {
+                    zone.element.parentNode.removeChild(zone.element);
+                }
+            });
+            textZones = [];
+        }
+        
+        // Génération de l'arborescence des fichiers
+        function generateFileTree() {
+            if (!pictosData) return;
+            
+            const treeContainer = document.getElementById('file-tree');
+            treeContainer.innerHTML = '';
+            
+            Object.keys(pictosData).forEach(folderName => {
+                const folderElement = createFolderElement(folderName, pictosData[folderName]);
+                treeContainer.appendChild(folderElement);
+            });
+        }
+        
+        // Création d'un élément dossier
+        function createFolderElement(name, content) {
+            const folderDiv = document.createElement('div');
+            folderDiv.className = 'folder';
+            
+            const header = document.createElement('div');
+            header.className = 'folder-header';
+            header.addEventListener('click', () => toggleFolder(header));
+            
+            const triangle = document.createElement('div');
+            triangle.className = 'folder-triangle closed';
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = name.toUpperCase();
+            
+            header.appendChild(triangle);
+            header.appendChild(nameSpan);
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'folder-content';
+            
+            // Traitement des sous-dossiers et fichiers selon les spécifications
+            if (Array.isArray(content)) {
+                // C'est un tableau de fichiers uniquement
+                const fileList = document.createElement('div');
+                fileList.className = 'file-list';
+                
+                content.forEach(file => {
+                    const fileElement = createFileElement(file, `pictos/${name}/${file}`);
+                    fileList.appendChild(fileElement);
+                });
+                
+                contentDiv.appendChild(fileList);
+            } else if (typeof content === 'object') {
+                // C'est un objet avec des sous-dossiers et potentiellement des fichiers
+                
+                // 1. D'abord les sous-dossiers (selon spécification)
+                const subfolderList = document.createElement('div');
+                subfolderList.className = 'subfolder-list';
+                
+                Object.keys(content).forEach(key => {
+                    if (Array.isArray(content[key])) {
+                        // Sous-dossier
+                        const subfolderElement = createSubfolderElement(key, content[key], `${name}/${key}`);
+                        subfolderList.appendChild(subfolderElement);
+                    }
+                });
+                
+                if (subfolderList.children.length > 0) {
+                    contentDiv.appendChild(subfolderList);
+                }
+                
+                // 2. Ensuite les fichiers directs (s'il y en a)
+                const directFiles = content.files || [];
+                if (directFiles.length > 0) {
+                    const fileList = document.createElement('div');
+                    fileList.className = 'file-list';
+                    
+                    directFiles.forEach(file => {
+                        const fileElement = createFileElement(file, `pictos/${name}/${file}`);
+                        fileList.appendChild(fileElement);
+                    });
+                    
+                    contentDiv.appendChild(fileList);
+                }
+            }
+            
+            folderDiv.appendChild(header);
+            folderDiv.appendChild(contentDiv);
+            
+            return folderDiv;
+        }
+        
+        // Création d'un élément sous-dossier
+        function createSubfolderElement(name, files, path) {
+            const subfolderDiv = document.createElement('div');
+            subfolderDiv.className = 'folder subfolder';
+            subfolderDiv.style.marginLeft = '40px';
+            
+            const header = document.createElement('div');
+            header.className = 'folder-header';
+            header.addEventListener('click', () => toggleFolder(header));
+            
+            const triangle = document.createElement('div');
+            triangle.className = 'folder-triangle closed';
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = name.toUpperCase();
+            
+            header.appendChild(triangle);
+            header.appendChild(nameSpan);
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'folder-content';
+            
+            // Créer une liste de fichiers alignée
+            const fileList = document.createElement('div');
+            fileList.className = 'file-list';
+            
+            files.forEach(file => {
+                const fileElement = createFileElement(file, `pictos/${path}/${file}`);
+                fileList.appendChild(fileElement);
+            });
+            
+            contentDiv.appendChild(fileList);
+            subfolderDiv.appendChild(header);
+            subfolderDiv.appendChild(contentDiv);
+            
+            return subfolderDiv;
+        }
+        
+        // Création d'un élément fichier
+        function createFileElement(filename, fullPath) {
+            const fileDiv = document.createElement('div');
+            fileDiv.className = 'file-item';
+            fileDiv.addEventListener('click', () => toggleFileSelection(fileDiv, fullPath));
+            
+            const checkbox = document.createElement('div');
+            checkbox.className = 'file-checkbox';
+            
+            const nameSpan = document.createElement('span');
+            // Retirer l'extension .jpg et mettre la première lettre en majuscule
+            const displayName = filename.replace('.jpg', '').replace(/^./, str => str.toUpperCase());
+            nameSpan.textContent = displayName;
+            
+            fileDiv.appendChild(checkbox);
+            fileDiv.appendChild(nameSpan);
+            
+            return fileDiv;
+        }
+        
+        // Basculement de l'état d'un dossier
+        function toggleFolder(header) {
+            const triangle = header.querySelector('.folder-triangle');
+            const content = header.parentNode.querySelector('.folder-content');
+            
+            if (triangle.classList.contains('closed')) {
+                triangle.classList.remove('closed');
+                triangle.classList.add('open');
+                content.classList.add('open');
+            } else {
+                triangle.classList.remove('open');
+                triangle.classList.add('closed');
+                content.classList.remove('open');
+            }
+        }
+        
+        // Sélection/désélection d'un fichier
+        function toggleFileSelection(fileDiv, filePath) {
+            const checkbox = fileDiv.querySelector('.file-checkbox');
+            
+            if (checkbox.classList.contains('selected')) {
+                // Désélectionner
+                checkbox.classList.remove('selected');
+                selectedFiles = selectedFiles.filter(f => f !== filePath);
+            } else {
+                // Sélectionner (si pas déjà 6 fichiers sélectionnés)
+                if (selectedFiles.length < maxSelectedFiles) {
+                    checkbox.classList.add('selected');
+                    selectedFiles.push(filePath);
+                }
+            }
+            
+            updateOkButton();
+        }
+        
+        // Effacement des fichiers sélectionnés
+        function clearSelectedFiles() {
+            document.querySelectorAll('.file-checkbox.selected').forEach(checkbox => {
+                checkbox.classList.remove('selected');
+            });
+            selectedFiles = [];
+            updateOkButton();
+        }
+        
+        // Traitement des fichiers sélectionnés
+        function processSelectedFiles() {
+            // Basculer vers DIV-3
+            switchToFunction3();
+            
+            // Afficher les images dans DIV-3
+            displaySelectedImages();
+        }
+        
+        // Basculement vers la fonction 3 (DIV-3)
+        function switchToFunction3() {
+            currentFunction = 3;
+            
+            // Masquer toutes les divs
+            document.querySelectorAll('.div-1, .div-2, .div-3').forEach(div => {
+                div.classList.remove('active');
+            });
+            
+            // Afficher DIV-3
+            document.getElementById('div-3').classList.add('active');
+            
+            // Configuration du menu pour DIV-3
+            setupMenuForFunction3();
+        }
+        
+        // Configuration du menu pour la fonction 3
+        function setupMenuForFunction3() {
+            document.getElementById('menu-2-left').innerHTML = '<button class="menu-btn" id="btn-retour"><img src="img/icone_fleche_gauche.png" alt="Retour"></button>';
+            document.getElementById('menu-2-center').innerHTML = '<button class="menu-btn" id="btn-poubelle"><img src="img/icone_poubelle.png" alt="Poubelle"></button>';
+            document.getElementById('menu-2-right').innerHTML = '';
+            
+            // Réattacher les événements
+            document.getElementById('btn-retour').addEventListener('click', () => switchToFunction(2));
+            document.getElementById('btn-poubelle').addEventListener('click', clearImages);
+        }
+        
+        // Affichage des images sélectionnées
+        function displaySelectedImages() {
+            calculateImageSlotDimensions();
+            
+            selectedFiles.forEach((filePath, index) => {
+                if (index < 6) {
+                    const slot = document.getElementById(`slot-${index + 1}`);
+                    slot.innerHTML = `<img src="${filePath}" alt="Image ${index + 1}">`;
+                    slot.classList.add('visible');
+                }
+            });
+        }
+        
+        // Calcul des dimensions des emplacements d'images (mêmes que les zones de texte)
+        function calculateImageSlotDimensions() {
+            const config = window.zoneConfig;
+            const containerHeight = config.containerHeight || (window.innerHeight - 120);
+            
+            const positions = [
+                { x: config.marginX, y: config.marginY },
+                { x: window.innerWidth - config.marginX - config.width, y: config.marginY },
+                { x: config.marginX, y: config.marginY * 2 + config.height },
+                { x: window.innerWidth - config.marginX - config.width, y: config.marginY * 2 + config.height },
+                { x: config.marginX, y: containerHeight - config.marginY - config.height },
+                { x: window.innerWidth - config.marginX - config.width, y: containerHeight - config.marginY - config.height }
+            ];
+            
+            positions.forEach((pos, index) => {
+                const slot = document.getElementById(`slot-${index + 1}`);
+                slot.style.left = pos.x + 'px';
+                slot.style.top = pos.y + 'px';
+                slot.style.width = config.width + 'px';
+                slot.style.height = config.height + 'px';
+            });
+        }
+        
+        // Effacement des images
+        function clearImages() {
+            document.querySelectorAll('.image-slot').forEach(slot => {
+                slot.innerHTML = '';
+                slot.classList.remove('visible');
+            });
+        }
+        
+        // Recalcul des dimensions lors du redimensionnement
+        window.addEventListener('resize', () => {
+            calculateZoneDimensions();
+            calculateImageSlotDimensions();
+        });
+    </script>
+</body>
+</html>

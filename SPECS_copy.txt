@@ -1,0 +1,95 @@
+La page html doit être responsive.
+La page html doit s'afficher correctement dans un navigateur sur PC.
+La page html doit s'afficher correctement dans un navigateur sur iPhone.
+Désactive les effets "bounce" et "rubber band scrolling" sur iPhone, avec un scrolling fluide et une visibilité complète du contenu (en haut et en bas).
+La page html doit être optimisée pour le navigateur Safari sur iPhone doit doit pouvoir fonctionner en mode offline (sans connexion à internet).
+
+La page html contient un menu en haut :
+- d'une hauteur de 60px
+- la couleur de fond est un dégradé allant du haut vers le bas, dans les tons orange (`linear-gradient(#FFB84D, #B26B00);`)
+- le menu doit toujours être visible même si on scrolle vers le bas.
+- la largeur du menu est découpé en 3 tiers non visibles
+- un bouton OK (représenté avec l'image img\icone_ok.png d'une largeur de 50px) doit être positionné au milieu du tiers le plus à droite.
+
+La page principale sous le menu :
+- a une couleur de fond #E7E7E7
+- est composée de 2 DIV supperposées l'une sur l'autre, nommée pour les spécifications DIV-1 et DIV-2.
+
+DIV-1 :
+- cette div doit utiliser les données du fichier pictos.json à la racine du workspace pour générer dynamiquement en javascipt une arboresence des répertoires et des fichiers.
+- je veux que les répertoires puissent se déplier et se replier
+- par défaut tous les répertoires seront repliés
+- je ne veux pas de trait verticaux pour représenter l'arboresence, le décalage des noms de répertoires de 80 px est suffisants
+- a gauche des noms de répertoire place un triangle pour indiquer si le répertoire est ouvert ou fermé : 
+    - pointe vers la droite si le répertoire est fermé, 
+    - pointe vers le bas si le répertoire est ouvert.
+- le nom des répertoires doit être affiché en majuscules
+- au sein d'un répertoire, les sous-répertoire sont affichés en premier, puis ensuite les fichiers
+- au sein d'un répertoire, les sous-répertoires et les fichiers doivent être alignés
+- les répertoires doivent avoir une font-size de 150%
+- laisse un espace de 20px entre deux répertoires
+- les fichiers doivent avoir une font-size de 130%
+- laisse un espace de 5px au dessus des noms de fichiers
+- affiche les fichiers sans le suffixe .jpg
+- la première lettre des fichiers doit être en majuscule.
+- les fichiers sont des élements sélectionnables. 
+- pour réprésenter la sélection, utilise une checkbox, ronde. 
+    - utilise le style que l'on trouve sur iOS, mais au lieu du bleu utilise du vert lorsque la checkbox est cochée.
+- lorsque l'on clique sur un nom de fichier déselectionné, il devient sélectionné. 
+- lorsque l'on clique sur un nom de fichier selectionné, il devient désélectionné. 
+
+
+DIV-2 :
+- dispose de 6 emplacement d'images : en 2 colonnes et 3 lignes
+- lorsqu'un emplacement ne contient pas d'image il ne doit pas être affiché
+- les 6 emplacements d'image doivent être visibles sans avoir besoin de scroller
+
+A l'affichage de la page html 
+- je veux que DIV-1 soit affichée et DIV-2 masquée.
+- tous les répertoires sont fermés
+- tous les fichiers sont déselectionnés.
+
+Lorsque je clique sur le bouton OK du menu en haut, je veux que l'affichage des DIV soit inversée :
+- la DIV affichée est masquée, 
+- la DIV qui était masquée est affichée
+- le changement de DIV doit se faire sans transition (aucun mouvement)
+
+
+Dans le menu haut, ajoute dans le tiers central un bouton poubelle (utilise le fichier img/icone_poubelle.png)
+Ce bouton ne sera affiché que si c'est DIV-2 qui est affichée.
+Lorsque l'on clique sur ce bouton, tous les pictos de DIV-2 ainsi que les noms de fichier disparaissent.
+DIV-1 est alors affichée, et tous les fichiers de DIV-1 deviennent désélectionnée, et toute l'arborescence des dossier est repliée.
+
+Dans DIV-2, les pictos affichés sont cliquables.
+Lorsque l'on clique dessus, utilises du text to speech pour que l'utilisateur puisse entendre le nom du picto qu'il a sélectionné.
+Pendant que l'outil prononce le nom du picto, le pictogramme doit être légèrement grossi pour que l'utilisateur voit sa sélection.
+
+Dans le menu haut, ajoute dans le premier tier (à gauche) un bouton retour (utilise le fichier img/icone_fleche_gauche.png)
+Ce bouton ne sera affiché que si c'est DIV-2 qui est affichée.
+Lorsque l'on clique sur ce bouton, DIV-2 est masquée et DIV-1 est affichée.
+Concernant le bouton OK, je voudrais qu'il ne soit affiché que si c'est DIV-1 qui est affiché, et que au moins un fichier a été sélectionné.
+
+Retire la règle d'affichage du bouton poubelle : le bouton poubelle doit être tout le temps affiché.
+
+
+
+
+
+
+
+
+
+
+
+J'ai fait plusieurs modifications pour résoudre le problème de taille de police sur iPhone :
+
+-webkit-text-size-adjust: none : Désactive l'ajustement automatique de la taille du texte par Safari
+Taille fixe en pixels : 48px pour iPhone (écrans < 480px) et 36px pour tablettes (écrans < 768px)
+!important : Force l'application de la règle CSS
+line-height: 1.2 : Améliore l'espacement des lignes pour le texte plus grand
+
+
+Modifier le style des boutons BTN-FCT1 et BTN-FCT2.
+Je ne veux pas de texte dans ces boutons.
+Je veux que les couleurs de ces deux boutons soient comme une lumière verte : lumière allumée si le bouton est sélectionné, lumière éteinte si le bouton n'est pas sélectionné.
+Pour le bouton sélectionné tu ajoutera en plus un halo lumineux autour.

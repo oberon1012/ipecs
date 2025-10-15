@@ -1,0 +1,157 @@
+1. GENERALITES SUR LA L'APPLICATION
+    - La page html doit être responsive.
+    - La page html doit s'afficher correctement dans un navigateur sur PC.
+    - La page html doit s'afficher correctement dans un navigateur sur iPhone.
+    - La page html doit être optimisée pour le navigateur Safari sur iPhone.
+    - L'arrière plan de l'application doit avoir la couleur #E7E7E7
+    - la page html utilise uniquement font-family: Arial, sans-serif;
+    - Sur iphone :
+        - Désactive les effets "bounce" et "rubber band scrolling".
+        - Désactive la fonction "pull-to-refresh"
+        - Désactive complêtement le zoom sur la page html (double tap entre autre)
+        - Désactive l'ajustement automatique de la taille du texte par Safari (-webkit-text-size-adjust: none)
+    
+    
+    
+
+2. MENU DES FONCTIONS PRINCIPALES : MENU-1
+    - En haut de l'écran
+    - D'une hauteur de 60px
+    - Couleur de fond dégradée, du haut vers le bas , dans les tons orange (`linear-gradient(#FFB84D, #B26B00);`)
+    - Doit toujours être visible, même en cas de scrolling
+    - Occupe toute la largeur de l'écran
+    - Est divisé en 2 moitiées, invisibles
+
+    2.1. Boutons 
+        - BTN-FCT1 : représente la fonction 1
+            - positionné au centre et au milieu de la première moitiée (gauche) de MENU-1
+            - bouton rond de style flat design
+            - hauteur 50px
+
+        - BTN-FCT2 : représente la fonction 2
+            - positionné au centre et au milieu de la seconde moitiée droite de MENU-1
+            - bouton rond de style flat design
+            - hauteur 50px
+   
+        - Style des boutons BTN-FCT1 et BTN-FCT2.
+            - Je ne veux pas de texte dans ces boutons.
+            - Je veux que les couleurs de ces deux boutons soient comme une lumière verte : lumière allumée si le bouton est sélectionné, lumière éteinte si le bouton n'est pas sélectionné.
+            - Pour le bouton sélectionné tu ajoutera en plus un halo lumineux autour.
+
+3. MENU DES FONCTIONS SECONDAIRES : MENU-2 
+    - En haut de l'écran sous menu 1
+    - D'une hauteur de 60px
+    - Couleur de fond dégradée, du haut vers le bas , dans les tons gris (`linear-gradient(#B2B2B2, #4D4D4D);`)
+    - le menu doit toujours être visible même si on scrolle vers le bas.
+    - la largeur du menu est découpé en 3 tiers non visibles
+
+4. ZONE PRINCIPALE
+    - La page principale sous le MENU-2 :
+        - est composée de 3 DIV superposées l'une sur l'autre, nommée pour les spécifications DIV-1, DIV-2 et DIV-3.
+        - DIV-1, DIV-2 et DIV-3 ont une couleur de fond #E7E7E7
+        - DIV-1, DIV-2 et DIV-3 doivent commencer exactement en dessous de MENU-2 et ne jamais pouvoir être recouverts par MENU-2 ou MENU-1
+        - La hauteur de DIV-1 et DIV-3 dépend :
+            - sur iPhone sur safari, on trouve en bas de l'écran une barre de navigation (contenant les boutons 'précédent', 'suivant', 'partager', 'favoris', etc.) : Je veux que DIV-1 et DIV-3 s'arrête juste au dessus de cette barre.
+            - dans les autres cas, DIV-1 et DIV-3 descend jusqu'en bas de l'écran.
+        - Le scrolling doit être activé dans DIV-2 et être complêtement désactivé pour DIV-1 et DIV-3.
+        - le bord bas de DIV-1 doit être rouge et d'une épaisseur de 1px.
+
+5. ETAT DE L'APPLICATION A L'OUVERTURE
+    - DIV-1 est affichée
+    - BTN-FCT1 est en légère surbrillance pour indiquer que la fonction est sélectionnée
+    - MENU-2 contient 
+        - Dans le 2ième tiers (centre) : un bouton POUBELLE, représenté avec l'image 'img/icone_poubelle.png', largeur 50px
+        - Dans le 3ième tiers (droite) : un bouton PLUS, représenté avec l'image 'img/icone_plus.png', largeur 50px
+
+6. FONCTIONNEMENT LORSQUE BTN-FCT1 DEVIENT ACTIF
+    - DIV-1 est affichée.
+    - DIV-1 peut afficher jusqu'à 6 zones destinées à contenir un ensemble de mots.
+
+    - Le bouton PLUS du menu 2 va permettre d'ajouter des mots.
+        - Lorsque l'utilisateur clique sur le bouton PLUS, une zone de saisie de 30 caractères maximum, s'affiche au premier plan.
+        - Dans cette zone de texte, on peux saisir tous les caractères : ne forme pas les lettre en majuscule.
+        - N'affiche de texte d'aide à la saisie comme par exemple 'Entrez votre texte'.
+        - En dessous de la zone de texte on trouve côte à côte :
+            - un bouton ANNULER représenté avec l'image img/icone_fleche_gauche.png (largeur 50px).
+            - un bouton OK représenté avec l'image img/icone_ok.png (largeur 50px).
+        - Le reste de l'écran est grisé et désactivé pour mettre en avant cette zone de saisie de texte et ces bouton.
+        - Un clic sur le bouton ANNULER ferme zone zone de saisie.
+        - Un clic sur le bouton OK n'a d'effet que si la zone de saisie de texte n'est pas vide.
+        - Si c'est le cas (zone de saisie de texte non vide), une nouvelle zone est créee dans DIV-1, avec à l'intérieur le texte qui a été saisi ; ce texte devra être passé en majuscules.
+        - La font-size des zones de texte doit utiliser une taille fixe en pixels : 20px pour iPhone (écrans < 480px) et 36px pour tablettes (écrans < 768px)
+        - Les zones de texte de DIV-1 ont des coins arrondis.
+        - Le texte a l'intérieur des zones de texte doit être en gras et aligné au centre.
+
+
+      - L'ajout d'une zone de texte doit se faire d'abord de gauche à droite, puis de haut en bas :
+          - la première zone de texte sera en haut à gauche
+          - la seconde zone de texte sera en haut à droite
+          - la troisième zone de texte sera au milieu à gauche
+          - la quatrième zone de texte sera au milieu à droite
+          - la cinquième zone de texte sera en base à gauche
+          - la sixième zone de texte sera en bas à droite
+
+      - Aide toi des règles suivantes pour caculer la taille des zones de texte et leur position :
+          - La valeur L-A correspond à (Largeur de l'écran en pixels) divisée par 17 et multipliée par 7
+          - La valeur L-B correspond à (Largeur de l'écran en pixels) divisée par 17 et multipliée par 1
+          - La valeur H-C correspond à (hauteur de DIV-1 en pixels) divisée par 22 et multipliée par 6
+          - La valeur H-D correspond à (hauteur de DIV-1 en pixels) divisée par 22 et multipliée par 1
+          - Les 6 zones de texte ont une largeur de L-A pixels
+          - Les 6 zones de texte ont une hauteur de H-C pixels
+          - Les 3 zones des texte à gauche sont positionnées à L-B pixels du bord de l'écran gauche
+          - Les 3 zones des texte à droite sont positionnées à L-B pixels du bord de l'écran droit
+          - Les 2 zones de texte en haut sont positionnées à H-D pixels sous le bord haut de DIV-1
+          - Les 2 zones de texte en bas sont positionnées à H-D pixels au dessus du bord bas DIV-1
+          - Les 2 zones de texte du milieu sont positionnée à H-D pixels au dessous des zones de texte du haut
+
+    - Un clic sur le bouton POUBELLE effacera toutes les zones de mots.
+
+    - Les zones de texte sont cliquables.
+    - Lorsque l'on clique dessus, utilise du text to speech pour que l'utilisateur puisse entendre le texte présent dans la zone de texte.
+    - Lorsque le texte est prononcé : 
+        - la zone de texte doit être légèrement grossie.
+        - je ne veux pas d'autre modification de la zone de texte (comme par exemple un changement de couleur du bord)
+        - le texte dans la zone de texte devient jaune doux. 
+        - ces deux modifications de la zone de texte ne doivent durer que 400 millisecondes ; la zone de texte reprend ensuite le style d'origine.
+        
+7. FONCTIONNEMENT LORSQUE BTN-FCT2 EST ACTIF
+    7.1. DIV-2
+    - Lorsque BTN-FCT2 devient actif, DIV-2 est affichée
+    - Contenu de MENU-2 :
+        - 1er tiers (à gauche) --> pas de bouton
+        - 2ième tiers (au centre) --> bouton poubelle (représenté avec l'image img/icone_poubelle.png)
+        - 3ème tiers (à droite) --> bouton OK (représenté avec l'image img\icone_ok.png d'une largeur de 50px). Le bouton OK n'est affiché que si au moins un fichier est sélectionné.
+    - DIV-2 doit utiliser les données du fichier pictos.json à la racine du workspace pour générer dynamiquement en javascipt une arboresence des répertoires et des fichiers.
+    - je veux que les répertoires puissent se déplier et se replier
+    - par défaut tous les répertoires seront repliés
+    - je ne veux pas de trait verticaux pour représenter l'arboresence, le décalage des noms de répertoires de 40px est suffisants
+    - a gauche des noms de répertoire place un triangle pour indiquer si le répertoire est ouvert ou fermé : 
+        - pointe vers la droite si le répertoire est fermé, 
+        - pointe vers le bas si le répertoire est ouvert.
+    - le nom des répertoires doit être affiché en majuscules
+    - au sein d'un répertoire, les sous-répertoire sont affichés en premier, puis ensuite les fichiers
+    - au sein d'un répertoire, les sous-répertoires et les fichiers doivent être alignés
+    - les répertoires doivent avoir une font-size de 150%
+    - laisse un espace de 20px entre deux répertoires
+    - les fichiers doivent avoir une font-size de 130%
+    - laisse un espace de 5px au dessus des noms de fichiers
+    - affiche les fichiers sans le suffixe .jpg
+    - la première lettre des fichiers doit être en majuscule.
+    - les fichiers sont des élements sélectionnables. 
+    - pour réprésenter la sélection, utilise une checkbox, ronde. 
+        - utilise le style que l'on trouve sur iOS, mais au lieu du bleu utilise du vert lorsque la checkbox est cochée.
+    - lorsque l'on clique sur un nom de fichier déselectionné, il devient sélectionné. 
+    - lorsque l'on clique sur un nom de fichier selectionné, il devient désélectionné. 
+    - on peut sélectionner au maximum 6 noms de fichiers.
+
+    7.2. DIV-3
+    - dispose de 6 emplacement d'images : en 2 colonnes et 3 lignes
+    - lorsqu'un emplacement ne contient pas d'image il ne doit pas être affiché
+    - pour les dimensions et positionnement de ces 6 emplassements d'images, tu utilisera les mêmes valeurs que les 6 zones de texte de DIV-1
+
+    - MENU-2 : 1er tiers (à gauche) --> bouton retour (représenté avec l'image img/icone_fleche_gauche.png)
+    - MENU-2 : 2ième tiers (au centre) --> bouton poubelle (représenté avec l'image img/icone_poubelle.png)
+    - MENU-2 : 3ème tiers (à droite) --> pas de bouton
+
+    7.3. Règles de gestion
+        TODO

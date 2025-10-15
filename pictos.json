@@ -1,0 +1,133 @@
+{
+    "activités": {
+      "type": "directory",
+      "files": [
+        "balançoire.jpg",
+        "ballon.jpg",
+        "trampoline.jpg",
+        "trottinette.jpg",
+        "télévision.jpg"
+      ]
+    },
+    "alimentation": {
+      "type": "directory",
+      "files": [
+        "fromage.jpg",
+        "fromage_rap$01$.jpg",
+        "fruits_sirop.jpg",
+        "madeleine.jpg",
+        "pain_confiture.jpg",
+        "pain_nutella.jpg",
+        "pate.jpg",
+        "riz.jpg",
+        "saucisses.jpg",
+        "saucisson.jpg",
+        "soupe.jpg",
+        "surimi.jpg",
+        "taboule.jpg",
+        "tarte_pommes.jpg"
+      ],
+      "subdirectories": {
+        "boissons": {
+          "type": "directory",
+          "files": [
+            "eau.jpg",
+            "lait.jpg",
+            "lait_nesquick.jpg",
+            "multi_fruits.jpg"
+          ]
+        },
+        "desserts": {
+          "type": "directory",
+          "files": [
+            "compote.jpg",
+            "danette_caramel.jpg",
+            "danette_chocolat.jpg",
+            "danette_vanille.jpg",
+            "flan_chocolat.jpg",
+            "flan_gateau.jpg",
+            "mousse_chocolat.jpg",
+            "suisse_chocolat.jpg",
+            "suisse_fruits.jpg",
+            "yaourt.jpg",
+            "yaourt_abricot.jpg",
+            "yaourt_ananas.jpg",
+            "yaourt_cerise.jpg",
+            "yaourt_coco.jpg",
+            "yaourt_fraise.jpg",
+            "yaourt_framboise.jpg",
+            "yaourt_mur.jpg",
+            "yaourt_nature.jpg",
+            "yaourt_peche.jpg"
+          ]
+        },
+        "entrées": {
+          "type": "directory",
+          "files": [
+            "betteraves.jpg",
+            "carottes rapées.jpg",
+            "carottes_rapes.jpg",
+            "salade_de_carottes.jpg",
+            "salade_de_tomates.jpg",
+            "salade_verte.jpg"
+          ]
+        },
+        "fruits": {
+          "type": "directory",
+          "files": [
+            "ananas.jpg",
+            "banane.jpg",
+            "clementine.jpg",
+            "melon.jpg",
+            "orange.jpg"
+          ]
+        },
+        "gouter": {
+          "type": "directory",
+          "files": [
+            "crepe_confiture.jpg",
+            "crepe_nature.jpg",
+            "crepe_nutella.jpg",
+            "croissant.jpg",
+            "pain_chocolat.jpg"
+          ]
+        },
+        "légumes": {
+          "type": "directory",
+          "files": [
+            "avocat.jpg",
+            "carotte.jpg",
+            "concombre.jpg",
+            "tomate.jpg"
+          ]
+        }
+      }
+    },
+    "hygiène": {
+      "type": "directory",
+      "files": [
+        "bain.jpg",
+        "toilettes.jpg"
+      ]
+    },
+    "oui & non": {
+      "type": "directory",
+      "files": [
+        "non.jpg",
+        "oui.jpg"
+      ]
+    },
+    "télévison": {
+      "type": "directory",
+      "files": [
+        "the_voice.jpg",
+        "total_wipeout.jpg"
+      ]
+    },
+    "émotions": {
+      "type": "directory",
+      "files": [
+        "triste.jpg"
+      ]
+    }
+}

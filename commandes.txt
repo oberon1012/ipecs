@@ -1,0 +1,10 @@
+génère un fichier pictos.json pour représenter les sous-répertoires et les fichiers du répertoire pictos. Le premier niveau de l'arborescence doit être le contenu du répertoire pictos.
+
+Génère un fichier index.html correspondant aux spécifications du fichier SPECS.txt.
+Si les spécifications ne sont pas claires et que tu as des doutes, poses moi des questions.
+Ne tiens compte que du fichier SPECS.txt ; pas de 'SPECS cpy.txt'
+Le fichier SPECS.txt est encore en cours d'écriture : les spécifications TODO viendront plus tard.
+
+
+
+Rédige les spécifications complètes et détaillées de l'application iPecs qui te permettrons de la reproduire sans ambiguité. Crée pour cela le fichier SPECS-DETAILLES-COPILOT.md
