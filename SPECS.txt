@@ -10,9 +10,6 @@
         - Désactive la fonction "pull-to-refresh"
         - Désactive complêtement le zoom sur la page html (double tap entre autre)
         - Désactive l'ajustement automatique de la taille du texte par Safari (-webkit-text-size-adjust: none)
-    
-    
-    
 
 2. MENU DES FONCTIONS PRINCIPALES : MENU-1
     - En haut de l'écran
@@ -25,18 +22,21 @@
     2.1. Boutons 
         - BTN-FCT1 : représente la fonction 1
             - positionné au centre et au milieu de la première moitiée (gauche) de MENU-1
-            - bouton rond de style flat design
+            - bouton rond
             - hauteur 50px
 
         - BTN-FCT2 : représente la fonction 2
             - positionné au centre et au milieu de la seconde moitiée droite de MENU-1
-            - bouton rond de style flat design
+            - bouton rond
             - hauteur 50px
    
         - Style des boutons BTN-FCT1 et BTN-FCT2.
             - Je ne veux pas de texte dans ces boutons.
-            - Je veux que les couleurs de ces deux boutons soient comme une lumière verte : lumière allumée si le bouton est sélectionné, lumière éteinte si le bouton n'est pas sélectionné.
+            - Lorsque le bouton est sélectionné, son style doit être comme une ampoule verte allumée
+            - Lorsque le bouton est désélectionné, sont style doit être comme une ampoule éteinte de couleur vert très foncé.
             - Pour le bouton sélectionné tu ajoutera en plus un halo lumineux autour.
+            - Lorsque BTN-FCT1 est sélectionné, BTN-FCT2 doit être déselectionné.
+            - Lorsque BTN-FCT2 est sélectionné, BTN-FCT1 doit être déselectionné.
 
 3. MENU DES FONCTIONS SECONDAIRES : MENU-2 
     - En haut de l'écran sous menu 1
@@ -50,16 +50,14 @@
         - est composée de 3 DIV superposées l'une sur l'autre, nommée pour les spécifications DIV-1, DIV-2 et DIV-3.
         - DIV-1, DIV-2 et DIV-3 ont une couleur de fond #E7E7E7
         - DIV-1, DIV-2 et DIV-3 doivent commencer exactement en dessous de MENU-2 et ne jamais pouvoir être recouverts par MENU-2 ou MENU-1
-        - La hauteur de DIV-1 et DIV-3 dépend :
-            - sur iPhone sur safari, on trouve en bas de l'écran une barre de navigation (contenant les boutons 'précédent', 'suivant', 'partager', 'favoris', etc.) : Je veux que DIV-1 et DIV-3 s'arrête juste au dessus de cette barre.
-            - dans les autres cas, DIV-1 et DIV-3 descend jusqu'en bas de l'écran.
+        - DIV-1 et DIV-3 descend jusqu'en bas de l'écran.
         - Le scrolling doit être activé dans DIV-2 et être complêtement désactivé pour DIV-1 et DIV-3.
         - le bord bas de DIV-1 doit être rouge et d'une épaisseur de 1px.
 
 5. ETAT DE L'APPLICATION A L'OUVERTURE
-    - DIV-1 est affichée
-    - BTN-FCT1 est en légère surbrillance pour indiquer que la fonction est sélectionnée
-    - MENU-2 contient 
+    - DIV-1 est affichée.
+    - BTN-FCT1 est sélectionné.
+    - MENU-2 contient : 
         - Dans le 2ième tiers (centre) : un bouton POUBELLE, représenté avec l'image 'img/icone_poubelle.png', largeur 50px
         - Dans le 3ième tiers (droite) : un bouton PLUS, représenté avec l'image 'img/icone_plus.png', largeur 50px
 
@@ -67,10 +65,18 @@
     - DIV-1 est affichée.
     - DIV-1 peut afficher jusqu'à 6 zones destinées à contenir un ensemble de mots.
 
+    - DIV-1 contient un tableau de 6 cas : 2 colonnes et 3 lignes.
+    - Ce tableau occupe la totalité de DIV-1 (toute la largeur et toute la hauteur).
+    - Chaque case du tableau contiendra une zone de texte.
+    - La zone de texte doit être centrée dans la case de tableau.
+    - Calcul les dimensions de la zone de texte de la façon suivante :
+        - sur iPhone (écrans < 480px) : dimensions (hauteur et largeur) zone de texte = dimension de la case - 30px
+        - dans tous les autres cas : dimensions (hauteur et largeur) zone de texte = dimension zone de contenu - 100px
+
     - Le bouton PLUS du menu 2 va permettre d'ajouter des mots.
         - Lorsque l'utilisateur clique sur le bouton PLUS, une zone de saisie de 30 caractères maximum, s'affiche au premier plan.
-        - Dans cette zone de texte, on peux saisir tous les caractères : ne forme pas les lettre en majuscule.
-        - N'affiche de texte d'aide à la saisie comme par exemple 'Entrez votre texte'.
+        - Dans cette zone de texte, on peux saisir tous les caractères : ne force pas les lettre en majuscule.
+        - N'affiche pas de texte d'aide à la saisie comme par exemple 'Entrez votre texte'.
         - En dessous de la zone de texte on trouve côte à côte :
             - un bouton ANNULER représenté avec l'image img/icone_fleche_gauche.png (largeur 50px).
             - un bouton OK représenté avec l'image img/icone_ok.png (largeur 50px).
@@ -78,33 +84,25 @@
         - Un clic sur le bouton ANNULER ferme zone zone de saisie.
         - Un clic sur le bouton OK n'a d'effet que si la zone de saisie de texte n'est pas vide.
         - Si c'est le cas (zone de saisie de texte non vide), une nouvelle zone est créee dans DIV-1, avec à l'intérieur le texte qui a été saisi ; ce texte devra être passé en majuscules.
-        - La font-size des zones de texte doit utiliser une taille fixe en pixels : 20px pour iPhone (écrans < 480px) et 36px pour tablettes (écrans < 768px)
+        - La font-size des zones de texte doit utiliser une taille fixe en pixels : 20px pour iPhone (écrans < 480px) et 36px pour tablettes (écrans < 768px).
         - Les zones de texte de DIV-1 ont des coins arrondis.
-        - Le texte a l'intérieur des zones de texte doit être en gras et aligné au centre.
+        - Le texte a l'intérieur des zones de texte doit être en gras.
+        - Le texte a l'intérieur des zones de texte doit être aligné au centre verticalement et horizontallement. Pour celà tu va :
+            - Propriétés forcées en JavaScript :
+                - textZone.style.display = 'flex'
+                - textZone.style.alignItems = 'center' (centrage vertical)
+                - textZone.style.justifyContent = 'center' (centrage horizontal)
+            - Dimensions exactes avec minHeight et maxHeight pour garantir la taille
 
+    - L'ajout d'une zone de texte doit se faire d'abord de gauche à droite, puis de haut en bas :
+        - la première zone de texte sera en haut à gauche
+        - la seconde zone de texte sera en haut à droite
+        - la troisième zone de texte sera au milieu à gauche
+        - la quatrième zone de texte sera au milieu à droite
+        - la cinquième zone de texte sera en base à gauche
+        - la sixième zone de texte sera en bas à droite
 
-      - L'ajout d'une zone de texte doit se faire d'abord de gauche à droite, puis de haut en bas :
-          - la première zone de texte sera en haut à gauche
-          - la seconde zone de texte sera en haut à droite
-          - la troisième zone de texte sera au milieu à gauche
-          - la quatrième zone de texte sera au milieu à droite
-          - la cinquième zone de texte sera en base à gauche
-          - la sixième zone de texte sera en bas à droite
-
-      - Aide toi des règles suivantes pour caculer la taille des zones de texte et leur position :
-          - La valeur L-A correspond à (Largeur de l'écran en pixels) divisée par 17 et multipliée par 7
-          - La valeur L-B correspond à (Largeur de l'écran en pixels) divisée par 17 et multipliée par 1
-          - La valeur H-C correspond à (hauteur de DIV-1 en pixels) divisée par 22 et multipliée par 6
-          - La valeur H-D correspond à (hauteur de DIV-1 en pixels) divisée par 22 et multipliée par 1
-          - Les 6 zones de texte ont une largeur de L-A pixels
-          - Les 6 zones de texte ont une hauteur de H-C pixels
-          - Les 3 zones des texte à gauche sont positionnées à L-B pixels du bord de l'écran gauche
-          - Les 3 zones des texte à droite sont positionnées à L-B pixels du bord de l'écran droit
-          - Les 2 zones de texte en haut sont positionnées à H-D pixels sous le bord haut de DIV-1
-          - Les 2 zones de texte en bas sont positionnées à H-D pixels au dessus du bord bas DIV-1
-          - Les 2 zones de texte du milieu sont positionnée à H-D pixels au dessous des zones de texte du haut
-
-    - Un clic sur le bouton POUBELLE effacera toutes les zones de mots.
+    - Un clic sur le bouton POUBELLE effacera toutes les zones de texte de DIV-1.
 
     - Les zones de texte sont cliquables.
     - Lorsque l'on clique dessus, utilise du text to speech pour que l'utilisateur puisse entendre le texte présent dans la zone de texte.
@@ -115,43 +113,82 @@
         - ces deux modifications de la zone de texte ne doivent durer que 400 millisecondes ; la zone de texte reprend ensuite le style d'origine.
         
 7. FONCTIONNEMENT LORSQUE BTN-FCT2 EST ACTIF
-    7.1. DIV-2
-    - Lorsque BTN-FCT2 devient actif, DIV-2 est affichée
-    - Contenu de MENU-2 :
-        - 1er tiers (à gauche) --> pas de bouton
-        - 2ième tiers (au centre) --> bouton poubelle (représenté avec l'image img/icone_poubelle.png)
-        - 3ème tiers (à droite) --> bouton OK (représenté avec l'image img\icone_ok.png d'une largeur de 50px). Le bouton OK n'est affiché que si au moins un fichier est sélectionné.
-    - DIV-2 doit utiliser les données du fichier pictos.json à la racine du workspace pour générer dynamiquement en javascipt une arboresence des répertoires et des fichiers.
-    - je veux que les répertoires puissent se déplier et se replier
-    - par défaut tous les répertoires seront repliés
-    - je ne veux pas de trait verticaux pour représenter l'arboresence, le décalage des noms de répertoires de 40px est suffisants
-    - a gauche des noms de répertoire place un triangle pour indiquer si le répertoire est ouvert ou fermé : 
-        - pointe vers la droite si le répertoire est fermé, 
-        - pointe vers le bas si le répertoire est ouvert.
-    - le nom des répertoires doit être affiché en majuscules
-    - au sein d'un répertoire, les sous-répertoire sont affichés en premier, puis ensuite les fichiers
-    - au sein d'un répertoire, les sous-répertoires et les fichiers doivent être alignés
-    - les répertoires doivent avoir une font-size de 150%
-    - laisse un espace de 20px entre deux répertoires
-    - les fichiers doivent avoir une font-size de 130%
-    - laisse un espace de 5px au dessus des noms de fichiers
-    - affiche les fichiers sans le suffixe .jpg
-    - la première lettre des fichiers doit être en majuscule.
-    - les fichiers sont des élements sélectionnables. 
-    - pour réprésenter la sélection, utilise une checkbox, ronde. 
-        - utilise le style que l'on trouve sur iOS, mais au lieu du bleu utilise du vert lorsque la checkbox est cochée.
-    - lorsque l'on clique sur un nom de fichier déselectionné, il devient sélectionné. 
-    - lorsque l'on clique sur un nom de fichier selectionné, il devient désélectionné. 
-    - on peut sélectionner au maximum 6 noms de fichiers.
+    Lorsque BTN-FCT2 devient actif : 
+        - si DIV-3 contient des pictos visibles, alors DIV-3 est affichée.
+        - sinon c'est DIV-2 qui est affichée.
+
+    7.1. DIV-2 est affichée
+        - Contenu de MENU-2 :
+            - 1er tiers (à gauche) --> pas de bouton
+            - 2ième tiers (au centre) --> bouton poubelle (représenté avec l'image img/icone_poubelle.png)
+            - 3ème tiers (à droite) --> bouton OK (représenté avec l'image img\icone_ok.png d'une largeur de 50px). Le bouton OK n'est affiché que si au moins un fichier est sélectionné.
+
+        - DIV-2 doit utiliser les données du fichier pictos.json à la racine du workspace pour générer dynamiquement en javascipt une arboresence qui contient des nom de répertoire et des noms de fichiers.
+        - je veux que les répertoires puissent se déplier et se replier.
+        - par défaut tous les répertoires seront repliés.
+        - je ne veux pas de trait verticaux pour représenter l'arboresence.
+        - les sous-répertoires sont décalés de 40px à droite par rapport au répertoire parent.
+        - les fichiers sont décalés de 40px à droite par rapport au répertoire parent.
+        - à gauche des noms de répertoire place un triangle pour indiquer si le répertoire est ouvert ou fermé : 
+            - pointe vers la droite si le répertoire est fermé, 
+            - pointe vers le bas si le répertoire est ouvert.
+        - le nom des répertoires doit être affiché en majuscules
+        - si un répertoire contient des sous répertoires et des fichiers, alors les sous répertoires sont affichés avant les fichiers.
+        - si un répertoire contient des sous répertoires et des fichiers, ils doivent être alignés.
+        - les noms des répertoires doivent avoir une font-size de 150%.
+        - laisse un espace de 15px au dessus des répertoires.
+        - les fichiers doivent avoir une font-size de 130%.
+        - laisse un espace de 5px au dessus des noms de fichiers
+        - affiche les fichiers sans le suffixe .jpg
+        - la première lettre des fichiers doit être en majuscule.
+        - les fichiers sont des élements sélectionnables. 
+        - pour réprésenter la sélection, utilise une checkbox, ronde. 
+            - utilise le style que l'on trouve sur iOS, mais au lieu du bleu utilise du vert lorsque la checkbox est cochée.
+        - on peut sélectionner au maximum 6 noms de fichiers.
+        - lorsque l'on sélectionne un fichier, l'image correspondante est ajoutée dans l'un des 6 emplacements d'images de DIV-3
+        - lorsque l'on déselectionne un fichier, l'image correspondante est retirée de DIV-3
 
     7.2. DIV-3
-    - dispose de 6 emplacement d'images : en 2 colonnes et 3 lignes
-    - lorsqu'un emplacement ne contient pas d'image il ne doit pas être affiché
-    - pour les dimensions et positionnement de ces 6 emplassements d'images, tu utilisera les mêmes valeurs que les 6 zones de texte de DIV-1
+        - Contenu de MENU-2 :
+            - 1er tiers (à gauche) --> bouton retour (représenté avec l'image img/icone_fleche_gauche.png)
+            - 2ième tiers (au centre) --> bouton poubelle (représenté avec l'image img/icone_poubelle.png)
+            - 3ème tiers (à droite) --> 3ème tiers (à droite) --> pas de bouton
 
-    - MENU-2 : 1er tiers (à gauche) --> bouton retour (représenté avec l'image img/icone_fleche_gauche.png)
-    - MENU-2 : 2ième tiers (au centre) --> bouton poubelle (représenté avec l'image img/icone_poubelle.png)
-    - MENU-2 : 3ème tiers (à droite) --> pas de bouton
+        - Divise DIV-3 en 6 zones de contenu égales : 2 colonnes et 3 lignes
+        - Chaque zone de contenu contiendra :
+            - une zone d'image en haut
+            - une zone de texte en bas
+
+        - Les zones de contenu doivent être transparentes et sans bord visible
+        - Les zones d'image doivent être transparentes et sans bord visible
+        - Les Zones de texte doivent être transparentes et sans bord visible
+
+        - Lorsque l'on sélectionne un fichier dans DIV-2, il est ajouté dans l'une des 6 zones d'images d'images de DIV-3 dans l'ordre suivant :
+            - en haut à gauche
+            - en haut à droite
+            - au milieu à gauche
+            - au milieu à droite
+            - en bas à gauche
+            - en bas à droite
+
+        - Les dimensions des fichiers images dépendent du navigateur :
+            - largeur 150px et hauteur 150px sur iPhone (écrans < 480px) .
+            - largeur 180px et hauteur 180px dans tous les autres cas.
+        
+        - Sous les images, dans les zones de texte : 
+            - tu afficheras le nom de l'image écrite en majuscule
+            - le nom doit être centré par rapport à l'image
 
     7.3. Règles de gestion
-        TODO
+        - lorsque l'on clique sur le bouton retour depuis DIV-3, on affiche DIV-2 dans le même état que quand cette div a été masquée.
+        - lorsque l'on clique sur le bouton poubelle depuis DIV-2 ou DIV-3 :
+            - toutes les images et les noms d'images de DIV-3 sont supprimées
+            - tous les fichiers dans DIV-2 sont déselectionnés
+            - tous les répertoires dans DIV-2 sont déselectionnés
+            - si le bouton poubelle a été cliqué depuis DIV-3, alors DIV-2 est affichée.
+        
+
+
+
+
+

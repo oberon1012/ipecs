@@ -2,8 +2,7 @@ génère un fichier pictos.json pour représenter les sous-répertoires et les f
 
 Génère un fichier index.html correspondant aux spécifications du fichier SPECS.txt.
 Si les spécifications ne sont pas claires et que tu as des doutes, poses moi des questions.
-Ne tiens compte que du fichier SPECS.txt ; pas de 'SPECS cpy.txt'
-Le fichier SPECS.txt est encore en cours d'écriture : les spécifications TODO viendront plus tard.
+Ne tiens compte que du fichier SPECS.txt ; pas de 'SPECS_copy.txt'
 
 
 
